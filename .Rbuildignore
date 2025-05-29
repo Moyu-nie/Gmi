@@ -2,3 +2,4 @@
 ^renv\.lock$
 ^Gmi\.Rproj$
 ^\.Rproj\.user$
+^README\.Rmd$
