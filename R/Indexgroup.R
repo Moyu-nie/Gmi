@@ -7,6 +7,7 @@
 #' @export
 #'
 #' @examples
+#'
 Indexgroup <- function(x, threshold) {
   if (length(x) == 1) {
     return(1)

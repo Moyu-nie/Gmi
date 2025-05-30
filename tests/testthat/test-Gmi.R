@@ -1,3 +1,5 @@
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
+
+
+test_that("eigen_matmul(): function return the soft thresholding", {
+  expect_equal(eigen_matmul(matrix(3,3),matrix(3,3)), 3)
 })

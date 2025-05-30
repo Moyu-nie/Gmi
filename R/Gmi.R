@@ -61,13 +61,13 @@ Gmi <- function(X, y, beta, penalty = "lasso",
     lam.list <- lam.list[lam.list <= max.lam]
     n.lambda <- length(lam.list)
   }
-  ######## initialie
+  ####### initialie
   a_0 <- a_0list[1]
   loglik.list <- cri.list <- AIC.list <- BIC.list <- MBIC.list <- EBIC.list <- GIC.list <-
     df.list <- df.m.list <- df.i.list <- Klist <- vector("numeric", n.lambda)
   ind.list.inter <- ind.list.main <- ind.list.inter.xlab <- beta.list.inter <-
     vector("list", n.lambda)
-  ############## main part
+  ###### main part
   ## expand X matrix dynamically each step by incorporating the new candidates of
   ## interactions, which are the interactions of the current active variables minus
   ## the current interaction effects, the interactions will play the same role as
