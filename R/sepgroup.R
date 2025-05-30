@@ -23,4 +23,3 @@ Sepgroup <- function(x,threshold){
   }
   return(group)
 }
-
