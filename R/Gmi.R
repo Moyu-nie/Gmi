@@ -74,13 +74,11 @@ Gmi <- function(X, y, beta, penalty = "lasso",
   ## the main effect, except we keep track of the list through the lambda sequence.
   ## Keep track of other indices as well.colnames(X)
 
-
   colnames(X) <- paste("X", 1:p, sep = "")
   ### heredity force
   nonPen <- rep(0, p)
   ### selected main effects from last step
   for (k in 1:n.lambda) {
-    ### heredity force
     nonPen <- rep(0, p)
     lam <- lam.list[k]
     ### selected main effects from last step
@@ -90,7 +88,7 @@ Gmi <- function(X, y, beta, penalty = "lasso",
       aa <- paste("X", combn(index, 2, paste, collapse = "X"), sep = "")
       aa <- as.vector(aa)
       newinter <- t(apply(X0[, index], 1, combn, 2, prod))
-      ### 主效应分组
+
       group <- Sepgroup(beta[1:p][index], 0.1)
       ### another constraint
       bb <- c()
@@ -195,8 +193,7 @@ Gmi <- function(X, y, beta, penalty = "lasso",
         }
         ind1 <- ind3
       }
-    } # end iter
-    # print(beta[1:p])
+    }
     # record the main and interaction
     ind.list.main[[k]] <- which(abs(beta[1:p]) > 1e-10)
     ind.list.inter[[k]] <- which(abs(beta[-(1:p)]) > 1e-10)
@@ -254,7 +251,6 @@ Gmi <- function(X, y, beta, penalty = "lasso",
   }
   ### hier is strong
   p.eff <- p + df.m.list * (df.m.list - 1) / 2
-  # p.eff = p + df.m.list *(df.m.list + 1)/2
   AIC.list <- loglik.list + 2 * df.list
   BIC.list <- loglik.list + log(n) * df.list
   MBIC.list <- loglik.list + log(n) * df.list + 2 * ebic.gamma *
@@ -293,7 +289,6 @@ Gmi <- function(X, y, beta, penalty = "lasso",
   } else {
     beta.i <- beta.list.inter[[cri.loc]]
   }
-  # 提示结束
   message("the method is finished")
 
   val <- list(

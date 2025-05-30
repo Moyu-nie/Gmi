@@ -26,6 +26,8 @@ SBfusedlasso(
 
 \item{y}{response variable, of dimension nobs x}
 
+\item{a_0}{intercept}
+
 \item{pf}{}
 }
 \description{

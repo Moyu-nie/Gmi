@@ -2,7 +2,7 @@
 #'
 #' @param X input matrix, of dimension nobs x nvars; each row is an observation
 #' @param y response variable, of dimension nobs x
-#' @param a_0
+#' @param a_0 intercept
 #' @param beta
 #' @param lam
 #' @param eta
@@ -23,9 +23,6 @@ SBfusedlasso <- function(X, y, a_0, beta, lam, eta, rho1 = 1, rho2 = 1,
                          penalty.type, epsilon1 = 4e-7, epsilon2 = 4e-7, maxiter1 = 100, maxiter2 = 100, pf) {
   ### version add intercept
   # a_0 : intercept
-  # require(cPCG)
-  # require(Rlinsolve)
-  # require(pcg)
   # eta must be [0,1]
   lambda1 <- lam * eta
   lambda2 <- lam * (1 - eta)
@@ -68,8 +65,7 @@ SBfusedlasso <- function(X, y, a_0, beta, lam, eta, rho1 = 1, rho2 = 1,
       a0 <- a
       b0 <- b
       ### step I
-      # "cPCG package" method
-      beta <- pcgsolve(
+      beta <- cPCG::pcgsolve(
         A = 1 / n * eigen_matmul(t(X_star), X_star) + rho1 * diag(p) + rho2 * eigen_matmul(t(D), D),
         b = 1 / n * eigen_matmul(t(X_star), z_star) + rho1 * (a - u1) + rho2 * t(D) %*% (b - u2), preconditioner = "Jacobi"
       )
