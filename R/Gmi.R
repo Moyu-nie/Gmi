@@ -1,7 +1,7 @@
 #' Title
 #'
 #' @param X input matrix, of dimension nobs x nvars; each row is an observation
-#' @param y
+#' @param y response
 #' @param beta
 #' @param penalty
 #' @param penalty.factor
@@ -19,6 +19,8 @@
 #' @export
 #'
 #' @examples
+#' @useDynLib Gmi, .registration = TRUE
+#' @importFrom Rcpp evalCpp
 Gmi <- function(X, y, beta, penalty = "lasso",
                 penalty.factor = rep(1, ncol(X)),
                 inter.penalty.factor = 1,

@@ -24,6 +24,8 @@ Gmi(
 \arguments{
 \item{X}{input matrix, of dimension nobs x nvars; each row is an observation}
 
+\item{y}{response}
+
 \item{eta}{}
 }
 \description{

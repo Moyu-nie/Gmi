@@ -3,6 +3,7 @@
 using namespace Eigen;
 using namespace std;
 
+//' @export
 //[[Rcpp::export]]
 SEXP eigen_inv(Eigen::MatrixXd A){
   Eigen::MatrixXd C = A.inverse();
