@@ -16,7 +16,6 @@ Sepgroup <- function(x,threshold){
     diff = x[i]-x
     loc = which(abs(diff) <= threshold,x)
     set = which(x0 %in% unique(x[loc]))
-    #set = match(x[loc],x0)
     group = append(group,list(set))
     x = x[-loc]
     if(i==0){break}

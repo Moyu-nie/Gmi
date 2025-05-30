@@ -19,13 +19,13 @@
 #' @export
 #'
 #' @examples
-SBfusedlasso_intercept <- function(X, y, a_0, beta, lam, eta, rho1 = 1, rho2 = 1,
+SBfusedlasso <- function(X, y, a_0, beta, lam, eta, rho1 = 1, rho2 = 1,
                                    penalty.type, epsilon1=4e-7, epsilon2=4e-7, maxiter1 = 100, maxiter2 = 100, pf) {
   ### version add intercept
   # a_0 : intercept
-  require(cPCG)
-  require(Rlinsolve)
-  require(pcg)
+  # require(cPCG)
+  # require(Rlinsolve)
+  # require(pcg)
   # eta must be [0,1]
   lambda1 =lam*eta
   lambda2 = lam*(1-eta)
@@ -46,7 +46,7 @@ SBfusedlasso_intercept <- function(X, y, a_0, beta, lam, eta, rho1 = 1, rho2 = 1
     # IWLS
     beta0 = beta
     eta1 = X%*%beta + a_0
-    p_hat = c(sigmoid(eta1))
+    p_hat = c(Sigmoid(eta1))
     w = p_hat*(1-p_hat)
     z = eta1 + (y-p_hat)/w
 
