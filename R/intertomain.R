@@ -1,7 +1,7 @@
-#' Title
+#' convert an interaction name list into the corresponding main effect for enforcing      strong hierachy
 #'
-#' @param interNameList
-#' @param p
+#' @param interNameList interaction name list input
+#' @param p dimensionality
 #'
 #' @returns
 #' @export

@@ -2,13 +2,15 @@
 % Please edit documentation in R/intertomain.R
 \name{intertomain}
 \alias{intertomain}
-\title{Title}
+\title{convert an interaction name list into the corresponding main effect for enforcing      strong hierachy}
 \usage{
 intertomain(interNameList, p)
 }
 \arguments{
-\item{p}{}
+\item{interNameList}{interaction name list input}
+
+\item{p}{dimensionality}
 }
 \description{
-Title
+convert an interaction name list into the corresponding main effect for enforcing      strong hierachy
 }

@@ -2,13 +2,19 @@
 % Please edit documentation in R/Sigmoid.R
 \name{Sigmoid}
 \alias{Sigmoid}
-\title{Title}
+\title{Sigmoid Activation Function}
 \usage{
 Sigmoid(z)
 }
 \arguments{
-\item{z}{}
+\item{z}{numeric vector}
+}
+\value{
+numeric vector or matrix with the sigmoid transformation applied.
 }
 \description{
-Title
+Sigmoid Activation Function
+}
+\examples{
+sigmoid(0)
 }
