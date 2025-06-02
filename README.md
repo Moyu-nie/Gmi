@@ -26,32 +26,134 @@ remotes::install_github("Moyu-nie/Gmi")
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
+\### Generate data
 
 ``` r
 library(Gmi)
-## basic example code
+p <- 100
+n <- 600
+alpha2 <- c(rep(c(4,3,2),each = 2),rep(0,p-3*2))
+gamma2 <- rep(0,choose(p,2))
+mu2 <- 2 # intercept
+rho2 <- 0.3 # correlation 
+
+# interact between group1 and group2
+aall = paste("X", combn(1 : p, 2, paste, collapse="X"), sep="")
+aa1 = outer(1:2, 3:4, f <- function(x, y) {
+  paste("X", pmin(x, y), "X", pmax(x, y), sep = "")
+})
+aa1 = as.vector(aa1)
+gamma2[match(aa1, aall)] <- c(rep(4,4))
+datList <- gendata(seed = 123, n ,p , alpha2, gamma2, mu2, rho2)
+x2 = datList$x
+Y2 = datList$Y
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+### Estimation
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+# fit
+Gmi.fit = Gmi(x2, Y2, beta = rep(0,p), lambda.min.ratio = 0.1, n.lambda = 50, penalty = "SCAD", eta = 0.5, tune = "EBIC")
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], : p
+#> must greater than 2
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X, y = y, a_0 = a_0, beta = beta, lam = lam, : ADMM
+#> desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X, y = y, a_0 = a_0, beta = beta, lam = lam, : ADMM
+#> desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X, y = y, a_0 = a_0, beta = beta, lam = lam, : ADMM
+#> desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X, y = y, a_0 = a_0, beta = beta, lam = lam, : ADMM
+#> desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X, y = y, a_0 = a_0, beta = beta, lam = lam, : ADMM
+#> desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X, y = y, a_0 = a_0, beta = beta, lam = lam, : ADMM
+#> desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X, y = y, a_0 = a_0, beta = beta, lam = lam, : ADMM
+#> desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X, y = y, a_0 = a_0, beta = beta2, lam = lam, :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X, y = y, a_0 = a_0, beta = beta2, lam = lam, :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> Warning in SBfusedlasso(X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], :
+#> ADMM desn't converge in 20 iterations.
+#> the method is finished
+# estimate main effects
+print(Gmi.fit$beta.m)
+#>  [1]  1.1480599  0.7656352  0.7653269  0.7650195  0.7650415  0.3182777
+#>  [7]  0.3197179  0.2058801  0.2045365 -0.2044563 -0.2037450
+# estimate interaction effects
+print(Gmi.fit$beta.i)
+#> [1] 1.339334 1.339746
 ```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.

@@ -34,24 +34,33 @@ remotes::install_github("Moyu-nie/Gmi")
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
-
-```{r example}
+### Generate data
+```{r eval = TRUE}
 library(Gmi)
-## basic example code
+p <- 100
+n <- 600
+alpha2 <- c(rep(c(4,3,2),each = 2),rep(0,p-3*2))
+gamma2 <- rep(0,choose(p,2))
+mu2 <- 2 # intercept
+rho2 <- 0.3 # correlation 
+
+# interact between group1 and group2
+aall = paste("X", combn(1 : p, 2, paste, collapse="X"), sep="")
+aa1 = outer(1:2, 3:4, f <- function(x, y) {
+  paste("X", pmin(x, y), "X", pmax(x, y), sep = "")
+})
+aa1 = as.vector(aa1)
+gamma2[match(aa1, aall)] <- c(rep(4,4))
+datList <- gendata(seed = 123, n ,p , alpha2, gamma2, mu2, rho2)
+x2 = datList$x
+Y2 = datList$Y
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
+### Estimation
+```{r eval = TRUE}
+# fit
+Gmi.fit = Gmi(x2, Y2, beta = rep(0,p), lambda.min.ratio = 0.1, n.lambda = 50, penalty = "SCAD", eta = 0.5, tune = "EBIC")
+# estimate main effects
+print(Gmi.fit$beta.m)
+# estimate interaction effects
+print(Gmi.fit$beta.i)
 ```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
