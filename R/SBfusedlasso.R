@@ -1,26 +1,48 @@
-#' Title
+#' Split Bregman method for Fused Lasso
 #'
-#' @param X input matrix, of dimension nobs x nvars; each row is an observation
-#' @param y response variable, of dimension nobs x
-#' @param a_0 intercept
-#' @param beta
-#' @param lam
-#' @param eta
-#' @param rho1
-#' @param rho2
-#' @param penalty.type
-#' @param epsilon1
-#' @param epsilon2
-#' @param maxiter1
-#' @param maxiter2
-#' @param pf
+#' @param X input matrix, of dimension nobs x nvars; each row is an observation.
+#' @param y response variable, of dimension nobs x.
+#' @param a_0 Initial value for the intercept.
+#' @param beta Initial value for the coefficient vector (length equal to nvars).
+#' @param lam Overall penalty level (positive scalar). It will be split into two components: `lambda1` for
+#'  sparsity and `lambda2` for fusion.
+#' @param eta A scalar in between 0 and 1 that controls the proportion of `lam` allocated to sparsity
+#' (lasso-type) versus fusion penalty.
+#' @param rho1 Augmented Lagrangian parameter for the sparsity constraint. Default is 1.
+#' @param rho2 Augmented Lagrangian parameter for the fusion constraint. Default is 1.
+#' @param penalty.type Choose from \code{LASSO}, \code{SCAD} and \code{MCP}. Default is 'SCAD'.
+#' @param epsilon1 Convergence tolerance for primal residuals in ADMM. Default is `4e-7`.
+#' @param epsilon2 Convergence tolerance for dual residuals in ADMM. Default is `4e-7`.
+#' @param maxiter1 Maximum number of IRLS (outer loop) iterations. Default is 100.
+#' @param maxiter2 Maximum number of ADMM (inner loop) iterations. Default is 100.
+#' @param pf A numeric vector of penalty factors (length equal to number of variables). Variables with `pf = 0` will not be penalized.
 #'
-#' @returns
-#' @export
-#'
+#' @returns A list with the following elements:
+#' \describe{
+#'   \item{beta}{Estimated coefficient vector.}
+#'   \item{a_0}{Estimated intercept.}
+#'   \item{iters}{Number of outer iterations until convergence.}
+#' }
 #' @examples
+#' set.seed(123)
+#' n <- 50
+#' p <- 10
+#' X <- matrix(rnorm(n * p), n, p)
+#' beta_true <- c(rep(2, 5), rep(0, 5))
+#' eta <- X %*% beta_true
+#' prob <- Sigmoid(eta)
+#' y <- rbinom(n, 1, prob)
+#' pf <- rep(1, p)
+#'
+#' fit <- SBfusedlasso(X, y,
+#'   a_0 = 0, beta = rep(0, p), lam = 1, eta = 0.5,
+#'   penalty.type = "SCAD", pf = pf
+#' )
+#' print(fit$beta)
+#'
+#' @export
 SBfusedlasso <- function(X, y, a_0, beta, lam, eta, rho1 = 1, rho2 = 1,
-                         penalty.type, epsilon1 = 4e-7, epsilon2 = 4e-7, maxiter1 = 100, maxiter2 = 100, pf) {
+                         penalty.type = "SCAD", epsilon1 = 4e-7, epsilon2 = 4e-7, maxiter1 = 100, maxiter2 = 100, pf) {
   ### version add intercept
   # a_0 : intercept
   # eta must be [0,1]

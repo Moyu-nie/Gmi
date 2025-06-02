@@ -2,13 +2,34 @@
 % Please edit documentation in R/gendata.R
 \name{gendata}
 \alias{gendata}
-\title{generate data}
+\title{Generate Simulated Data}
 \usage{
 gendata(seed, n, p, alpha, gamma, beta, rho)
 }
 \arguments{
-\item{rho}{}
+\item{seed}{An integer seed value for reproducibility of the response variable generation.}
+
+\item{n}{Integer. Number of observations to generate.}
+
+\item{p}{Integer. Number of predictors.}
+
+\item{alpha}{A numeric vector of length \code{p}, representing the coefficients for the main effects.}
+
+\item{gamma}{A numeric vector representing the coefficients for all two-way interaction terms. The number of
+interactions is \code{choose(p, 2)}.}
+
+\item{beta}{A numeric scalar. Intercept term in the logistic model.}
+
+\item{rho}{Numeric value between -1 and 1. Correlation parameter for predictors.}
+}
+\value{
+A list containing:
+\describe{
+\item{\code{x}}{An \code{n x p} matrix of standardized covariates.}
+\item{\code{xx}}{An \code{n x choose(p, 2)} matrix of all two-way interaction terms.}
+\item{\code{Y}}{A binary response vector of length \code{n} generated from a logistic model.}
+}
 }
 \description{
-generate data
+Simulates binary response data with main effects and two-way interaction terms based on a logistic model.
 }

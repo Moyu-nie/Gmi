@@ -2,13 +2,21 @@
 % Please edit documentation in R/St.R
 \name{St}
 \alias{St}
-\title{Title}
+\title{Soft Thresholding Function}
 \usage{
 St(x, lambda)
 }
 \arguments{
-\item{lambda}{}
+\item{x}{A numeric vector to be thresholded.}
+
+\item{lambda}{non-negative threshold parameter}
+}
+\value{
+A numeric vector or scalar of the same shape as \code{x}, where each element has been soft-thresholded.
 }
 \description{
-Title
+Soft Thresholding Function
+}
+\examples{
+St(c(-3, -1, 0, 1), 1)
 }

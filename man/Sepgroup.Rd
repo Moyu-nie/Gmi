@@ -2,16 +2,23 @@
 % Please edit documentation in R/Sepgroup.R
 \name{Sepgroup}
 \alias{Sepgroup}
-\title{Title}
+\title{Group Similar Elements in a Numeric Vector}
 \usage{
 Sepgroup(x, threshold)
 }
 \arguments{
-\item{threshold}{}
+\item{x}{A numeric vector.}
+
+\item{threshold}{A non-negative numeric value specifying the maximum distance allowed between elements to be considered in the same group.}
 }
 \value{
-generate group according to threshold
+A list of integer vectors. Each element of the list contains the indices of the original vector \code{x} that form a group.
 }
 \description{
-Title
+This function partitions a numeric vector into groups where each group contains values that are
+within a specified threshold of each other. Two elements belong to the same group if their
+absolute difference is less than or equal to \code{threshold}.
+}
+\examples{
+Sepgroup(c(1.0, 1.1, 2.5, 2.6, 5.0), threshold = 0.2)
 }

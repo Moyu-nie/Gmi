@@ -2,13 +2,23 @@
 % Please edit documentation in R/Indexgroup.R
 \name{Indexgroup}
 \alias{Indexgroup}
-\title{Title}
+\title{Group Similar Values by Threshold}
 \usage{
 Indexgroup(x, threshold)
 }
 \arguments{
-\item{threshold}{}
+\item{x}{A numeric vector to be grouped.}
+
+\item{threshold}{A non-negative numeric value. Elements in \code{x} within}
+}
+\value{
+An integer vector of the same length as \code{x}, where each element
+indicates the group index that the corresponding value in \code{x} belongs to.
 }
 \description{
-Title
+Group Similar Values by Threshold
+}
+\examples{
+x <- c(0.01, 0.02, 0.5, 0.52, 0.51, 1.5)
+Indexgroup(x, threshold = 0.05)
 }

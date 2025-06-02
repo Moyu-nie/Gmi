@@ -1,13 +1,14 @@
-#' Title
+#' Group Similar Values by Threshold
 #'
-#' @param x
-#' @param threshold
+#' @param x A numeric vector to be grouped.
+#' @param threshold A non-negative numeric value. Elements in `x` within
 #'
-#' @returns
-#' @export
-#'
+#' @returns An integer vector of the same length as `x`, where each element
+#'          indicates the group index that the corresponding value in `x` belongs to.
 #' @examples
-#'
+#' x <- c(0.01, 0.02, 0.5, 0.52, 0.51, 1.5)
+#' Indexgroup(x, threshold = 0.05)
+#' @export
 Indexgroup <- function(x, threshold) {
   if (length(x) == 1) {
     return(1)

@@ -7,14 +7,14 @@
 Sigmoid(z)
 }
 \arguments{
-\item{z}{numeric vector}
+\item{z}{A numeric vector.}
 }
 \value{
-numeric vector or matrix with the sigmoid transformation applied.
+A numeric vector with the sigmoid transformation applied.
 }
 \description{
 Sigmoid Activation Function
 }
 \examples{
-sigmoid(0)
+Sigmoid(0)
 }

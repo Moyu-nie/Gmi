@@ -1,12 +1,15 @@
-#' Title
+#' Group Similar Elements in a Numeric Vector
 #'
-#' @param x
-#' @param threshold
+#' This function partitions a numeric vector into groups where each group contains values that are
+#' within a specified threshold of each other. Two elements belong to the same group if their
+#' absolute difference is less than or equal to `threshold`.
+#' @param x A numeric vector.
+#' @param threshold A non-negative numeric value specifying the maximum distance allowed between elements to be considered in the same group.
 #'
-#' @returns generate group according to threshold
-#' @export
-#'
+#' @returns A list of integer vectors. Each element of the list contains the indices of the original vector `x` that form a group.
 #' @examples
+#' Sepgroup(c(1.0, 1.1, 2.5, 2.6, 5.0), threshold = 0.2)
+#' @export
 Sepgroup <- function(x, threshold) {
   if (length(x) == 1) {
     return(x)

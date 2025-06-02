@@ -1,12 +1,15 @@
-#' convert an interaction name list into the corresponding main effect for enforcing      strong hierachy
+#' Convert Interaction Term Names to Corresponding Main Effect Indices
 #'
-#' @param interNameList interaction name list input
-#' @param p dimensionality
+#' convert an interaction name list into the corresponding main effect for enforcingstrong hierachy
+#' @param interNameList A list of interaction term names.
+#' @param p Integer. The total number of variables (dimensionality) in the design matrix.
 #'
-#' @returns
-#' @export
-#'
+#' @returns An integer vector giving the indices of main effects involved in the interaction terms.
 #' @examples
+#' interNameList <- list("X1X3", "X2X4", "X1X2")
+#' p <- 5
+#' intertomain(interNameList, p)
+#' @export
 intertomain <- function(interNameList, p) {
   mainInd <- rep(0, p)
   for (i in 1:length(interNameList)) {

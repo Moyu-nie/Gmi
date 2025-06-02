@@ -1,26 +1,56 @@
-#' Title
+#' Group-level Main Effects and Interactions for High-Dimensional Generalized Linear Models
 #'
-#' @param X input matrix, of dimension nobs x nvars; each row is an observation
-#' @param y response
-#' @param beta
-#' @param penalty
-#' @param penalty.factor
-#' @param inter.penalty.factor
-#' @param lam.list
-#' @param lambda.min.ratio
-#' @param max.iter
-#' @param n.lambda
-#' @param eps
-#' @param tune
-#' @param ebic.gamma
-#' @param eta
-#'
-#' @returns
-#' @export
-#'
-#' @examples
 #' @useDynLib Gmi, .registration = TRUE
 #' @importFrom Rcpp evalCpp
+#' @importFrom stats rbinom
+#' @importFrom utils combn
+#' @param X A numeric matrix of predictors with dimensions n × p.
+#' @param y A numeric response vector of length n.
+#' @param beta Initial values for regression coefficients. If NULL, initialized to zero.
+#' @param penalty penalty Choose from \code{LASSO}, \code{SCAD} and \code{MCP}. Default
+#' is 'SCAD'.
+#' @param penalty.factor A multiplicative factor for the penalty applied to each coefficient. If supplied,
+#'  penalty.factor must be a numeric vector of length equal to the number of columns of X. The purpose of
+#'  penalty.factor is to apply differential penalization if some coefficients are thought to be more likely
+#'  than others to be in the model. In particular, penalty.factor can be 0, in which case the coefficient is
+#'  always in the model without shrinkage.
+#' @param inter.penalty.factor The penalty factor for interactions effects. Default is 1.
+#' @param lam.list A user supplied \eqn{\lambda} sequence.
+#' @param lambda.min.ratio Optional input. smallest value for \code{lambda}, as
+#' a fraction of \code{max.lam}, the (data derived) entry value. the default
+#' depends on the sample size \code{n} relative to the number of variables
+#' @param max.iter maximum number of iteration in the computation. Default is
+#' 100.
+#' @param n.lambda The number of \code{lambda} values. Default is 100.
+#' @param eps Tolerance threshold. Coefficients below this threshold
+#'   are treated as zero.
+#' @param tune Tuning parameter selection method.
+#' 'AIC', 'BIC', 'EBIC' and 'GIC' are available options. Default is EBIC.
+#' @param ebic.gamma the gamma parameter value in the EBIC criteria. Default is
+#'   1.
+#' @param eta A scalar in between 0 and 1 that controls the proportion of \code{lambda} allocated to sparsity (lasso-type) versus fusion penalty.
+#'
+#' @returns An object with Gmi.
+#' \describe{
+#'   \item{beta}{Final coefficient vector including both main effects and interactions.}
+#'   \item{a_0}{Intercept corresponding to the selected model.}
+#'   \item{a_0.list}{Intercepts along the lambda path.}
+#'   \item{beta.m.mat}{Matrix of main effect coefficients for each lambda.}
+#'   \item{beta.i.mat}{List of interaction coefficients across lambda values.}
+#'   \item{beta.m}{Selected main effect coefficients.}
+#'   \item{beta.i}{Selected interaction coefficients.}
+#'   \item{lambda}{Sequence of lambda values used.}
+#'   \item{mainInd.list}{List of indices of selected main effects for each lambda.}
+#'   \item{mainInd}{Indices of main effects in the selected model.}
+#'   \item{cri.list}{Values of the selected criterion across lambdas.}
+#'   \item{loglik.list}{Log-likelihood values across lambdas.}
+#'   \item{cri.loc}{Index of the lambda minimizing the selected criterion.}
+#'   \item{all.locs}{Indices of lambda minimizing AIC, BIC, EBIC, GIC, and MBIC respectively.}
+#'   \item{interInd.list}{List of selected interaction term names for each lambda.}
+#'   \item{interInd}{Names of selected interactions in the final model.}
+#'   \item{Klist}{Number of estimated groups for each lambda.}
+#' }
+#' @export
 Gmi <- function(X, y, beta, penalty = "lasso",
                 penalty.factor = rep(1, ncol(X)),
                 inter.penalty.factor = 1,

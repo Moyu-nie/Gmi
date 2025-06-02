@@ -4,18 +4,23 @@
 # Gmi
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of Gmi is to …
+Gmi: Group-Level Main Effects and Interactions in High-Dimensional Data.
+
+Gmi is a package for analyzing the high dimensional data with
+group-level main and interaction effetcs, developed by the Huazhen Lin’s
+lab.
 
 ## Installation
 
 You can install the development version of Gmi from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/), firstly, install the ‘remotes’ package.
 
 ``` r
-# install.packages("pak")
-pak::pak("Moyu-nie/Gmi")
+install.packages("remotes")
+remotes::install_github("Moyu-nie/Gmi")
 ```
 
 ## Example
@@ -23,7 +28,7 @@ pak::pak("Moyu-nie/Gmi")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-# library(Gmi)
+library(Gmi)
 ## basic example code
 ```
 

@@ -3,7 +3,6 @@
 using namespace Eigen;
 using namespace std;
 
-//' @export
 //[[Rcpp::export]]
 SEXP eigen_matmul(Eigen::MatrixXd A, Eigen::MatrixXd B){
   Eigen::MatrixXd C = A * B;
