@@ -52,7 +52,7 @@ SBfusedlasso <- function(X, y, a_0, beta, lam, eta, rho1 = 1, rho2 = 1,
   n <- dim(X)[1]
   p <- dim(X)[2]
   # fusion penalty coefficients
-  if (p <= 2) {
+  if (p < 2) {
     warning("p must greater than 2")
   }
 
@@ -150,9 +150,9 @@ SBfusedlasso <- function(X, y, a_0, beta, lam, eta, rho1 = 1, rho2 = 1,
       }
     }
 
-    if (i2 == maxiter2) {
-      warning(sprintf("ADMM desn't converge in %d iterations.", maxiter2))
-    }
+    # if (i2 == maxiter2) {
+    #   warning(sprintf("ADMM desn't converge in %d iterations.", maxiter2))
+    # }
     ### estimate a_0:intercept
     a_0 <- c(z_weight_bar - x_weight_bar %*% beta)
 

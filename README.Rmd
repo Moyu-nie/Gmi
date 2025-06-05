@@ -38,7 +38,7 @@ This is a basic example which shows you how to solve a common problem:
 ```{r eval = TRUE}
 library(Gmi)
 p <- 100
-n <- 600
+n <- 500
 alpha2 <- c(rep(c(4,3,2),each = 2),rep(0,p-3*2))
 gamma2 <- rep(0,choose(p,2))
 mu2 <- 2 # intercept
@@ -51,14 +51,15 @@ aa1 = outer(1:2, 3:4, f <- function(x, y) {
 })
 aa1 = as.vector(aa1)
 gamma2[match(aa1, aall)] <- c(rep(4,4))
-datList <- gendata(seed = 123, n ,p , alpha2, gamma2, mu2, rho2)
+
+datList <- gendata(1, n ,p , alpha2, gamma2, mu2, rho2)
 x2 = datList$x
 Y2 = datList$Y
 ```
 ### Estimation
 ```{r eval = TRUE}
 # fit
-Gmi.fit = Gmi(x2, Y2, beta = rep(0,p), lambda.min.ratio = 0.1, n.lambda = 50, penalty = "SCAD", eta = 0.5, tune = "EBIC")
+Gmi.fit = Gmi(x2, Y2, beta = rep(0,p), lambda.min.ratio = 0.02, n.lambda = 100, penalty = "SCAD", eta = 0.6, tune = "EBIC")
 # estimate main effects
 print(Gmi.fit$beta.m)
 # estimate interaction effects
