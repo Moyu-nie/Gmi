@@ -31,17 +31,14 @@ predict_Gmi <- function(object, newdata = NULL, type = c("link", "response", "cl
     X <- oldX
   }
   n <- nrow(X)
-  p <- ncol(X)
   mainind.list <- object$mainInd.list
   interind.list <- object$interInd.list
   a0.list <- object$a_0.list
   k <- length(mainind.list) ### total number of models visited
 
   eta <- matrix(0, n, k)
-  model.list <- as.list(NULL)
   count <- 0
   for (i in 1:k) {
-    # cat('i= ', i, ' out of ', k,'\n')
     mainind <- mainind.list[[i]]
     Xmain <- X[, mainind]
     count <- count + 1

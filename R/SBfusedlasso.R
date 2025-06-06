@@ -145,14 +145,11 @@ SBfusedlasso <- function(X, y, a_0, beta, lam, eta, rho1 = 1, rho2 = 1,
       #### stoping criteria
       stop.primal <- mean((beta - a)^2) + mean((D %*% beta - b)^2)
       stop.dual <- mean((a - a0)^2) + mean((b - b0)^2)
-      if ((stop.primal <= epsilon1) & (stop.dual <= epsilon2)) {
+      if ((stop.primal <= epsilon1) && (stop.dual <= epsilon2)) {
         break
       }
     }
 
-    # if (i2 == maxiter2) {
-    #   warning(sprintf("ADMM desn't converge in %d iterations.", maxiter2))
-    # }
     ### estimate a_0:intercept
     a_0 <- c(z_weight_bar - x_weight_bar %*% beta)
 

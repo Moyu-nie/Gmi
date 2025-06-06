@@ -7,7 +7,8 @@
 gendata(seed, n, p, alpha, gamma, beta, rho)
 }
 \arguments{
-\item{seed}{An integer seed value for reproducibility of the response variable generation.}
+\item{seed}{An integer seed value
+for reproducibility of the response variable generation.}
 
 \item{n}{Integer. Number of observations to generate.}
 
@@ -15,8 +16,8 @@ gendata(seed, n, p, alpha, gamma, beta, rho)
 
 \item{alpha}{A numeric vector of length \code{p}, representing the coefficients for the main effects.}
 
-\item{gamma}{A numeric vector representing the coefficients for all two-way interaction terms. The number of
-interactions is \code{choose(p, 2)}.}
+\item{gamma}{A numeric vector representing the coefficients
+for all two-way interaction terms. The number of interactions is \code{choose(p, 2)}.}
 
 \item{beta}{A numeric scalar. Intercept term in the logistic model.}
 
@@ -31,5 +32,5 @@ A list containing:
 }
 }
 \description{
-Simulates binary response data with main effects and two-way interaction terms based on a logistic model.
+Generate Simulated Data
 }

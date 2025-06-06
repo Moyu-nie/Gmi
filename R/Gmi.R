@@ -129,7 +129,7 @@ Gmi <- function(X, y, beta, penalty = "lasso",
           for (j in ((i + 1):length(group))) {
             loc_sep1 <- match(beta[1:p][index][group[[i]]], beta[1:p])
             loc_sep2 <- match(beta[1:p][index][group[[j]]], beta[1:p])
-            bb <- append(bb, as.vector(outer(loc_sep1, loc_sep2, f <- function(x, y) {
+            bb <- append(bb, as.vector(outer(loc_sep1, loc_sep2, function(x, y) {
               paste("X", pmin(x, y), "X", pmax(x, y), sep = "")
             })))
           }
@@ -204,7 +204,7 @@ Gmi <- function(X, y, beta, penalty = "lasso",
         beta <- cd.temp1$beta
         ind1 <- which(abs(beta) > 1e-10)
       }
-      if ((ite > 1) & (length(ind1) >= 2)) {
+      if ((ite > 1) && (length(ind1) >= 2)) {
         cd.temp2 <- SBfusedlasso(
           X = X[, ind1], y = y, a_0 = a_0, beta = beta[ind1], lam = lam, eta = eta, rho1 = 1, rho2 = 1, penalty.type = pentype,
           epsilon1 = 1e-7, epsilon2 = 1e-7, maxiter1 = 100, maxiter2 = 20, pf = pf[ind1]
@@ -308,7 +308,7 @@ Gmi <- function(X, y, beta, penalty = "lasso",
   GIC.loc <- which.min(GIC.list[region])
 
   all.locs <- c(AIC.loc, BIC.loc, EBIC.loc, GIC.loc, MBIC.loc)
-  lambda <- lam.list[1:ncol(beta.mat)]
+  lambda <- lam.list[seq_len(ncol(beta.mat))]
 
 
   if (length(ind.list.inter) == 0) {

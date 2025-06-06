@@ -1,12 +1,12 @@
 #' Generate Simulated Data
 #'
-#' Simulates binary response data with main effects and two-way interaction terms based on a logistic model.
-#' @param seed An integer seed value for reproducibility of the response variable generation.
+#' @param seed An integer seed value
+#' for reproducibility of the response variable generation.
 #' @param n Integer. Number of observations to generate.
 #' @param p Integer. Number of predictors.
 #' @param alpha A numeric vector of length \code{p}, representing the coefficients for the main effects.
-#' @param gamma A numeric vector representing the coefficients for all two-way interaction terms. The number of
-#'  interactions is \code{choose(p, 2)}.
+#' @param gamma A numeric vector representing the coefficients
+#'  for all two-way interaction terms. The number of interactions is \code{choose(p, 2)}.
 #' @param beta A numeric scalar. Intercept term in the logistic model.
 #' @param rho Numeric value between -1 and 1. Correlation parameter for predictors.
 #'
@@ -25,9 +25,7 @@ gendata <- function(seed, n, p, alpha, gamma, beta, rho) {
   # generate Y
   # generate all possible two-way interaction term (matrix)
   xx <- t(apply(x, 1, combn, 2, prod))
-  # xx <- scale(xx, center = TRUE,scale = TRUE)
   # generate theta:intercept
-
   theta <- beta + x %*% alpha + xx %*% gamma
   set.seed(seed)
   Y <- rbinom(n, 1, Sigmoid(theta))

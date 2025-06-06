@@ -26,7 +26,8 @@ remotes::install_github("Moyu-nie/Gmi")
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
-\### Generate data
+
+### Generate data
 
 ``` r
 library(Gmi)
